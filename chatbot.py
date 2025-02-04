@@ -10,9 +10,9 @@ DB_USER = os.getenv("DB_USER")
 DB_PASS = os.getenv("DB_PASS")
 DB_NAME = os.getenv("DB_NAME")
 
-myCon = mc.connect(host=DB_HOST, user= DB_USER, passwd=DB_PASS, db = DB_NAME)
-mycursor = myCon.cursor()
-engine = pyttsx3.init()
+myCon = mc.connect(host=DB_HOST, user= DB_USER, passwd=DB_PASS, db = DB_NAME) # Create Connection
+mycursor = myCon.cursor() # Create Cursor
+engine = pyttsx3.init() # Establish Voice Bot and Assign it to variable engine
 engine.say("Hello there, I am Bot. Your friendly neighbourhood Chatbot.")
 engine.runAndWait()
 print("Hello there, I am Bot. Your friendly neighbourhood Chatbot.")
@@ -36,14 +36,14 @@ engine.runAndWait()
 course=input("What do you study? ")
 sql = "INSERT INTO user_data (user_name, age, home, course) VALUES (%s, %s, %s, %s)"
 val = (user_name, age, home, course)
-mycursor.execute(sql, val)
+mycursor.execute(sql, val) # Insert user data into MySQL
 myCon.commit()
 print(mycursor.rowcount, "record inserted.")
 mycursor.execute("SELECT * FROM USER_DATA")
-rows = mycursor.fetchall()
+rows = mycursor.fetchall() # Store fetched data into variable rows
 print("Here is the User Data Table")
 for row in rows:
     print(row)
 mycursor.close()
 myCon.close()    
-print("Connection closed successfully.")                             
+print("Connection closed successfully.") # Close connection and print message                     
