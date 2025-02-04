@@ -1,6 +1,8 @@
 import mysql.connector as mc
 import pyttsx3
-engine = pyttsx3.init() 
+myCon = mc.connect( host="localhost", user= "root", passwd="Password123@", db = "bot_data")
+mycursor = myCon.cursor()
+engine = pyttsx3.init()
 engine.say("Hello there, I am Bot. Your friendly neighbourhood Chatbot.")
 engine.runAndWait()
 print("Hello there, I am Bot. Your friendly neighbourhood Chatbot.")
@@ -22,12 +24,16 @@ print("Oh ," + home + " is a nice place.")
 engine.say("What do you study? ")
 engine.runAndWait()
 course=input("What do you study? ")
-myCon = mc.connect( host="localhost", user= "root", passwd="root", db = "bot_data")
-mycursor = myCon.cursor()
 sql = "INSERT INTO user_data (user_name, age, home, course) VALUES (%s, %s, %s, %s)"
 val = (user_name, age, home, course)
 mycursor.execute(sql, val)
 myCon.commit()
 print(mycursor.rowcount, "record inserted.")
+mycursor.execute("SELECT * FROM USER_DATA")
+rows = mycursor.fetchall()
+print("Here is the User Data Table")
+for row in rows:
+    print(row)
+mycursor.close()
 myCon.close()    
 print("Connection closed successfully.")                             
