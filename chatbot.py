@@ -1,6 +1,16 @@
 import mysql.connector as mc
 import pyttsx3
-myCon = mc.connect( host="localhost", user= "root", passwd="Password123@", db = "bot_data")
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
+
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASS")
+DB_NAME = os.getenv("DB_NAME")
+
+myCon = mc.connect(host=DB_HOST, user= DB_USER, passwd=DB_PASS, db = DB_NAME)
 mycursor = myCon.cursor()
 engine = pyttsx3.init()
 engine.say("Hello there, I am Bot. Your friendly neighbourhood Chatbot.")
